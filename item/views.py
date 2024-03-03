@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.http import HttpResponseBadRequest
 
 from .models import Article, Category, Comment
-from .forms import NewArticleForm, CommentForm
+from .forms import NewArticleForm, CommentForm, CategoryForm
 
 
 def index(request):
@@ -15,20 +15,30 @@ def index(request):
     return render(request, "item/index.html", ctx)
 
 
+
 class NewArticle(LoginRequiredMixin, View):
     def get(self, request):
-        form = NewArticleForm()
-        ctx = {"form": form, "title": "New Article"}
+        article_form = NewArticleForm()
+        category_form = CategoryForm()
+        ctx = {"form": article_form, 
+               "category_form": category_form,
+               "title": "New Article"}
         return render(request, "item/new.html", ctx)
 
     def post(self, request):
-        form = NewArticleForm(request.POST, request.FILES)
+        article_form = NewArticleForm(request.POST, request.FILES)
+        category_form = CategoryForm(request.POST)
 
-        if not form.is_valid():
-            ctx = {"form": form, "title": "New Article"}
+        if not article_form.is_valid() and not category_form.is_valid():
+            ctx = {"article_form": article_form, 
+               "category_form": category_form,
+               "title": "New Article"}
             return render(request, "item/new.html", ctx)
 
-        article = form.save(commit=False)
+        category = category_form.save()
+
+        article = article_form.save(commit=False)
+        article.category = category
         article.author = request.user
         article.save()
 
