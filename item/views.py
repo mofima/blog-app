@@ -20,7 +20,7 @@ class NewArticle(LoginRequiredMixin, View):
     def get(self, request):
         article_form = NewArticleForm()
         category_form = CategoryForm()
-        ctx = {"form": article_form, 
+        ctx = {"article_form": article_form, 
                "category_form": category_form,
                "title": "New Article"}
         return render(request, "item/new.html", ctx)
