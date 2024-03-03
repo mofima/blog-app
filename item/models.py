@@ -35,7 +35,7 @@ class Article(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     topic = models.CharField(max_length=255)
     image = models.ImageField(
-        default="default_artpic.jpg",
+        default="images/default_artpic.jpg",
         upload_to="item_images",
         blank=True,
         null=True,

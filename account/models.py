@@ -50,7 +50,7 @@ def validate_image_size(image):
 
 class Profile(models.Model):    
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-    avatar = models.ImageField(default='default.jpg', upload_to='profile_pics', validators=[validate_image_size])
+    avatar = models.ImageField(default='images/default.jpg', upload_to='profile_pics', validators=[validate_image_size])
     bio = models.TextField(blank=True)
 
     def save(self, *args, **kwargs):
