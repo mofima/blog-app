@@ -1,0 +1,56 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="pb-6 grid grid-cols-1 md:grid-cols-4 gap-4 bg-gray-100">
+    <div class="md:col-span-1 p-2">
+        <form method="get" action="{% url 'item:browse' %}">
+            {% csrf_token %}
+            <input name="query" class="w-full md:w-64 py-4 mb-2 px-6 border rounded-xl" type="text" value="{{ query }}" placeholder="Find an article...">
+
+            <button class="mt-2 md:mt-0 py-4 px-8 md:ml-2 text-lg bg-orange-500 text-white rounded-xl">Search</button>
+        </form>
+
+        <hr class="my-6">
+
+        <p class="font-semibold">Categories</p>
+
+        <ul>
+            {% for category in categories %}
+                <li class="py-2 px-2 rounded-xl{% if category.id == category_id %} bg-gray-100{% endif %}">
+                    <a href="{% url 'item:browse' %}?query={{ query }}&category={{ category.id }}">{{ category.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <hr class="my-6">
+
+        <p class="font-semibold">Clear filters</p>
+
+        <ul>
+            <li><a href="{% url 'item:browse' %}" class="mt-2 py-4 px-8 md:ml-2 inline-block bg-green-500 text-lg rounded-xl text-white">Clear</a></li>
+        </ul>
+    </div>
+    
+    <div class="md:col-span-3">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {% for article in articles %}
+                <div>
+                    <a href="{{ article.get_absolute_url  }}">
+                    <div>
+                        <img src="{{ article.image.url }}" class="rounded-t-xl w-full">
+                    </div>
+
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="text-2xl">{{ article.topic|truncatewords:7 }}</h2>
+                        <p class="text-gray-500">{{ article.content|safe|truncatewords:10 }}</p>
+                    </div>
+                </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
