@@ -3,6 +3,8 @@ from django.contrib.auth.models import BaseUserManager, AbstractUser
 from django.utils.translation import gettext_lazy as _ 
 from django.core.exceptions import ValidationError
 
+import os 
+
 from PIL import Image 
 
 class CustomerManager(BaseUserManager):
@@ -50,18 +52,19 @@ def validate_image_size(image):
 
 class Profile(models.Model):    
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-    avatar = models.ImageField(default='images/default.jpg', upload_to='profile_pics', validators=[validate_image_size])
+    avatar = models.ImageField(default='images/default.jpg', upload_to='profile_pics', validators=[validate_image_size], blank=True, null=True)
     bio = models.TextField(blank=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-        img = Image.open(self.avatar.path)
-
-        if img.height > 100 or img.width > 100:
-            new_img = (100, 100)
-            img.thumbnail(new_img)
-            img.save(self.avatar.path)
+        img_path = self.avatar.path
+        if os.path.exists(img_path):
+            img = Image.open(img_path)
+            if img.height > 100 or img.width > 100:
+                new_img = (100, 100)
+                img.thumbnail(new_img)
+                img.save(self.avatar.path)
 
     def __str__(self):
         return  f'{self.user.username} Profile'       
