@@ -28,9 +28,7 @@ SECRET_KEY = os.environ.get(
     "SECRET_KEY", "django-insecure-y)%kl+kzp2w2ru)9jl#0)%e)@=qzs__@y877_b@efkc=@amgcf"
 )
 DEBUG = os.environ.get("DEBUG", "True") == "True"
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS", "127.0.0.1", "blog-app-zcnz.onrender.com"
-).split(",")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1", "blog-app-zcnz.onrender.com").split(",")
 
 
 # Application definition
