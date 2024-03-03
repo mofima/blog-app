@@ -24,7 +24,7 @@ class NewArticleForm(forms.ModelForm):
 
         widgets = {
             "topic": forms.TextInput(attrs={"class": INPUT_CLASSES}),
-            "content": CKEditorWidget(attrs={"class": INPUT_CLASSES}),
+            "content": CKEditorWidget(),
             "image": forms.FileInput(attrs={"class": INPUT_CLASSES}),
         }
 
