@@ -12,7 +12,7 @@ class NewArticleForm(forms.ModelForm):
         fields = ("category", "topic", "content", "image")
 
         widgets = {
-            'category': forms.TextInput(attrs={'class': INPUT_CLASSES}),
+            'category': forms.Select(attrs={'class': INPUT_CLASSES}),
             "topic": forms.TextInput(attrs={"class": INPUT_CLASSES}),
             "content": CKEditorWidget(attrs={'class': INPUT_CLASSES}),
             "image": forms.FileInput(attrs={"class": INPUT_CLASSES}),
