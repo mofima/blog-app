@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.http import HttpResponseBadRequest
 
 from .models import Article, Category, Comment
-from .forms import NewArticleForm, CommentForm, CategoryForm
+from .forms import NewArticleForm, CommentForm
 
 
 def index(request):

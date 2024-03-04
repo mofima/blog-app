@@ -2,7 +2,7 @@ from django import forms
 
 from ckeditor.widgets import CKEditorWidget
 
-from .models import Article, Comment, Category
+from .models import Article, Comment
 
 INPUT_CLASSES = "w-full py-4 px-6 rounded-xl border"
 
