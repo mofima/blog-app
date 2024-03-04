@@ -18,27 +18,21 @@ def index(request):
 
 class NewArticle(LoginRequiredMixin, View):
     def get(self, request):
-        article_form = NewArticleForm()
-        category_form = CategoryForm()
-        ctx = {"article_form": article_form, 
-               "category_form": category_form,
+        form = NewArticleForm()
+        ctx = {"form": form, 
                "title": "New Article"}
         return render(request, "item/new.html", ctx)
 
     def post(self, request):
-        article_form = NewArticleForm(request.POST, request.FILES)
-        category_form = CategoryForm(request.POST)
+        form = NewArticleForm(request.POST, request.FILES)
 
-        if not article_form.is_valid() and not category_form.is_valid():
-            ctx = {"article_form": article_form, 
-               "category_form": category_form,
+        if not form.is_valid():
+            ctx = {"form": form, 
                "title": "New Article"}
             return render(request, "item/new.html", ctx)
 
-        category = category_form.save()
 
-        article = article_form.save(commit=False)
-        article.category = category
+        article = form.save(commit=False)
         article.author = request.user
         article.save()
 

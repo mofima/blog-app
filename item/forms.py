@@ -6,25 +6,15 @@ from .models import Article, Comment, Category
 
 INPUT_CLASSES = "w-full py-4 px-6 rounded-xl border"
 
-
-class CategoryForm(forms.ModelForm):
-    name = forms.CharField(required=True,widget=forms.TextInput(attrs={
-        'placeholder': 'Enter category',
-        'class': 'w-full py-4 px-6 rounded-xl border'
-    })) 
-    class Meta:
-        model = Category
-        fields = ('name',)
-
-
 class NewArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ("topic", "content", "image")
+        fields = ("category", "topic", "content", "image")
 
         widgets = {
+            'category': forms.TextInput(attrs={'class': INPUT_CLASSES}),
             "topic": forms.TextInput(attrs={"class": INPUT_CLASSES}),
-            "content": CKEditorWidget(),
+            "content": CKEditorWidget(attrs={'class': INPUT_CLASSES}),
             "image": forms.FileInput(attrs={"class": INPUT_CLASSES}),
         }
 
