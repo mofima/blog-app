@@ -39,9 +39,6 @@
             {% for article in articles %}
                 <div>
                     <a href="{{ article.get_absolute_url  }}">
-                    <div>
-                        <img src="{{ article.image.url }}" class="rounded-t-xl w-full">
-                    </div>
                     {% if article.image %}
                         <img src="{{ article.image.url }}" alt="Article image" class="rounded-t-xl w-full" />
                     {% else %}
